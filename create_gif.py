@@ -32,9 +32,6 @@ def draw(game, screen, sprite_loader, text=None):
         pygame.display.update()
 
 
-def get_all_obj(game):
-    return [[ game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
-
 def play(game, screen, sprite_loader, result_image_group, actions, epoch=0):
     game_over = False
     images = []
@@ -56,12 +53,12 @@ def play(game, screen, sprite_loader, result_image_group, actions, epoch=0):
             pygame.display.flip()
             return images
 
-        game.MovePlayer(action_dic[actions[time_step]])
+        game.MovePlayer(config.action_dic[actions[time_step]])
 
         if game.GetPlayState() == pyBaba.PlayState.WON or game.GetPlayState() == pyBaba.PlayState.LOST:
             game_over = True
 
-        state = get_all_obj(game)
+        state = utils.get_all_obj(game)
         if prev_state == state: # Omit rendering if the next state keeps the same.
             continue
 
@@ -135,15 +132,6 @@ def main(args):
     screen = setup_screen(game)
 
     sprite_loader, result_image_group = setup_sprites()
-
-    global action_dic
-    action_dic = {
-        "Direction.UP": pyBaba.Direction.UP, 
-        "Direction.DOWN": pyBaba.Direction.DOWN,
-        "Direction.LEFT": pyBaba.Direction.LEFT, 
-        "Direction.RIGHT": pyBaba.Direction.RIGHT, 
-        "Direction.NONE": pyBaba.Direction.NONE
-    }
 
     pygame.init()
     pygame.font.init()

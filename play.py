@@ -52,7 +52,7 @@ def main(args):
         for event in pygame.event.get():
             if event.type == pygame.USEREVENT:
                 if time_step < len(actions):
-                    game.MovePlayer(action_dic[actions[time_step]])
+                    game.MovePlayer(config.action_dic[actions[time_step]])
                     time_step += 1
                 else:
                     pass
