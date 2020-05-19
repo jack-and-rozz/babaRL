@@ -5,8 +5,9 @@ import config
 import sys, time
 import sprites
 from PIL import Image, ImageDraw, ImageFont
+import utils
 
-def draw_obj(game, screen, x_pos, y_pos):
+def draw_obj(game, screen, sprite_loader, x_pos, y_pos):
     objects = game.GetMap().At(x_pos, y_pos)
 
     for obj_type in objects.GetTypes():
@@ -19,26 +20,26 @@ def draw_obj(game, screen, x_pos, y_pos):
         obj_image.render(screen, (x_pos * config.BLOCK_SIZE,
                                   (y_pos + 1) * config.BLOCK_SIZE))
 
-def draw(game, screen, epoch, time_step, action):
+def draw(game, screen, sprite_loader, text=None):
     for y_pos in range(game.GetMap().GetHeight()):
         for x_pos in range(game.GetMap().GetWidth()):
-            draw_obj(game, screen, x_pos, y_pos)
+            draw_obj(game, screen, sprite_loader, x_pos, y_pos)
 
 
-    action = action.split('.')[-1]
-    text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
-    text = font.render(text, False, config.COLOR_METATXT)
-    screen.blit(text, (0, 0))
-    pygame.display.update()
+    if text:
+        text = config.font.render(text, False, config.COLOR_METATXT)
+        screen.blit(text, (0, 0))
+        pygame.display.update()
 
 
 def get_all_obj(game):
     return [[ game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
 
-def play(game, actions, epoch=0):
+def play(game, screen, sprite_loader, result_image_group, actions, epoch=0):
     game_over = False
     images = []
     prev_state = None
+    screen_size = utils.get_screen_size(game)
     for time_step, action in enumerate(actions):
         text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
         print(text)
@@ -67,16 +68,17 @@ def play(game, actions, epoch=0):
         prev_state = state
 
         screen.fill(config.COLOR_BACKGROUND)
-        draw(game, screen, epoch, time_step, action)
+
+        action = action.split('.')[-1]
+        text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
+
+        draw(game, screen, sprite_loader, text=text)
         pygame.display.flip()
 
         img = screen2image(screen, epoch, time_step, action)
         images.append(img)
 
     if game_over:
-        screen_size = (game.GetMap().GetWidth() * config.BLOCK_SIZE,
-                       (game.GetMap().GetHeight() + 1) * config.BLOCK_SIZE)
-
         if game.GetPlayState() == pyBaba.PlayState.WON:
             result_image_group.update(pyBaba.PlayState.WON, screen_size)
             result_image_group.draw(screen)
@@ -114,8 +116,7 @@ def setup_game(map_path):
     return game
 
 def setup_screen(game):
-    screen_size = (game.GetMap().GetWidth() * config.BLOCK_SIZE,
-                   (game.GetMap().GetHeight() + 1) * config.BLOCK_SIZE)
+    screen_size = utils.get_screen_size(game)
     screen = pygame.display.set_mode(
         (screen_size[0], screen_size[1]), pygame.DOUBLEBUF) #.convert()
     return screen
@@ -128,15 +129,11 @@ def setup_sprites():
     return sprite_loader, result_image_group
 
 def main(args):
-    map_path = "../../Resources/Maps/out_of_reach.txt"
     map_path = "baba-is-auto/Resources/Maps/baba_is_you.txt"
 
-    global screen 
     game = setup_game(map_path)
     screen = setup_screen(game)
 
-    global sprite_loader 
-    global result_image_group
     sprite_loader, result_image_group = setup_sprites()
 
     global action_dic
@@ -150,8 +147,6 @@ def main(args):
 
     pygame.init()
     pygame.font.init()
-    global font
-    font = pygame.font.Font(None, config.BLOCK_SIZE)
 
     action_logs = load_action_logs()
     images = []
@@ -159,7 +154,7 @@ def main(args):
 
     for epoch, actions in enumerate(action_logs):
         game = setup_game(map_path)
-        images += play(game, actions, epoch)
+        images += play(game, screen, sprite_loader, result_image_group, actions, epoch)
 
 
     save_as_animation(images, 'stage.gif')
@@ -175,7 +170,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser( 
         add_help=True,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # parser.add_argument('models_root', type=str)
     args = parser.parse_args()
     main(args)
 

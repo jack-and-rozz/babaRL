@@ -1,42 +1,20 @@
+import argparse
 import pygame
+
 import pyBaba
 import config
 import sys
 import sprites
 
-game = pyBaba.Game("../../Resources/Maps/out_of_reach.txt")
-screen_size = (game.GetMap().GetWidth() * config.BLOCK_SIZE,
-               game.GetMap().GetHeight() * config.BLOCK_SIZE)
-screen = pygame.display.set_mode(
-    (screen_size[0], screen_size[1]), pygame.DOUBLEBUF)
-sprite_loader = sprites.SpriteLoader()
+from create_gif import draw, draw_obj, setup_game, setup_sprites, setup_screen
+import utils
 
-result_image = sprites.ResultImage()
-result_image_group = pygame.sprite.Group()
-result_image_group.add(result_image)
+def main(args):
+    map_path = "baba-is-auto/Resources/Maps/baba_is_you.txt"
 
-
-def draw_obj(x_pos, y_pos):
-    objects = game.GetMap().At(x_pos, y_pos)
-
-    for obj_type in objects.GetTypes():
-        if pyBaba.IsTextType(obj_type):
-            obj_image = sprite_loader.text_images[obj_type]
-        else:
-            if obj_type == pyBaba.ObjectType.ICON_EMPTY:
-                continue
-            obj_image = sprite_loader.icon_images[obj_type]
-        obj_image.render(screen, (x_pos * config.BLOCK_SIZE,
-                                  y_pos * config.BLOCK_SIZE))
-
-
-def draw():
-    for y_pos in range(game.GetMap().GetHeight()):
-        for x_pos in range(game.GetMap().GetWidth()):
-            draw_obj(x_pos, y_pos)
-
-
-if __name__ == '__main__':
+    game = setup_game(map_path)
+    screen = setup_screen(game)
+    sprite_loader, result_image_group = setup_sprites()
     pygame.init()
     pygame.font.init()
 
@@ -52,6 +30,8 @@ if __name__ == '__main__':
 
     game_over = False
     time_step = 0
+
+    screen_size = utils.get_screen_size(game)
 
     while True:
         if game_over:
@@ -85,7 +65,16 @@ if __name__ == '__main__':
             game_over = True
 
         screen.fill(config.COLOR_BACKGROUND)
-        draw()
+        text = None
+        draw(game, screen, sprite_loader, text=text)
         pygame.display.flip()
 
         clock.tick(config.FPS)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser( 
+        add_help=True,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    args = parser.parse_args()
+    main(args)
+
