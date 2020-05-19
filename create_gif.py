@@ -1,4 +1,4 @@
-import argparse
+import argparse, glob
 import pygame
 import pyBaba
 import config
@@ -31,7 +31,7 @@ def play(game, actions, epoch=0):
         if game.GetPlayState() == pyBaba.PlayState.WON or game.GetPlayState() == pyBaba.PlayState.LOST:
             game_over = True
 
-        state = utils.get_all_obj(game)
+        state = get_all_obj(game)
         if prev_state == state: # Omit rendering if the next state keeps the same.
             continue
 
@@ -72,7 +72,7 @@ def main(args):
     action_logs = [action_logs[0] for _ in range(2)]
 
     for epoch, actions in enumerate(action_logs):
-        game = setup_game(map_path)
+        game = pyBaba.Game(args.map_path)
         images += play(game, actions, epoch)
 
 
@@ -86,9 +86,13 @@ def load_action_logs():
     return [actions]
 
 if __name__ == '__main__':
+    map_candidates = [l.split('/')[-1].split('.')[0] for l in glob.glob(config.MAP_ROOT + '/*')]
+
     parser = argparse.ArgumentParser( 
         add_help=True,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('map_name', choices=map_candidates)
     args = parser.parse_args()
+    args.map_path = config.MAP_ROOT + '/' + args.map_name + '.txt'
     main(args)
 
