@@ -52,7 +52,7 @@ class BabaEnv(gym.Env):
 
         if result == pyBaba.PlayState.LOST:
             self.done = True
-            reward = -500
+            reward = -100
         elif result == pyBaba.PlayState.WON:
             self.done = True
             reward = 200

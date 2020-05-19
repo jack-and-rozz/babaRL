@@ -3,4 +3,7 @@ baba-is-auto
 .python-version
 .#*
 ._*
+.DS_Store
+
+
 checkpoints

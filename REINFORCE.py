@@ -82,7 +82,8 @@ def train(net, opt):
 def choose_map(map_root):
     import random
     map_list = list(glob(map_root + '/*.txt'))
-    return random.choice(map_list)
+    return map_list[1]
+    # return random.choice(map_list)
 
 def main(args):
     map_path = choose_map(args.map_root)
@@ -94,7 +95,6 @@ def main(args):
     opt = optim.Adam(net.parameters(), lr=1e-3)
     writer = SummaryWriter()
 
-
     global_step = 0
 
     for e in range(args.num_episode):
@@ -104,7 +104,7 @@ def main(args):
         state = env.reset().reshape(1, -1, env.H, env.W)
         # state = env.reset().reshape(1, -1, 16, 22)
 
-        step = 0
+        step = 0 
         while step < args.num_steps_per_episode:
             text = 'Episode %d, Step %d' % (e, global_step)
             global_step += 1
@@ -121,7 +121,6 @@ def main(args):
             state = copy.deepcopy(next_state)
 
             step += 1
-
             if env.done:
                 env.render(text=text)
                 break
