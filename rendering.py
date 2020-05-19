@@ -2,9 +2,18 @@ import pygame
 import pyBaba
 import sprites
 import config
-
 COLOR_BACKGROUND = config.COLOR_BACKGROUND
 BLOCK_SIZE = config.BLOCK_SIZE
+
+def get_screen_size(game, show_metatxt=True):
+    if show_metatxt:
+        screen_size = (game.GetMap().GetWidth() * config.BLOCK_SIZE,
+                       (game.GetMap().GetHeight() + 1) * config.BLOCK_SIZE)
+    else:
+        screen_size = (game.GetMap().GetWidth() * config.BLOCK_SIZE,
+                       game.GetMap().GetHeight() * config.BLOCK_SIZE)
+    return screen_size
+ 
 
 class Renderer():
     def __init__(self, game, enable_render=True):
@@ -19,13 +28,34 @@ class Renderer():
         self.enable_render = enable_render
 
         if self.enable_render is True:
-            self.screen_size = (game.GetMap().GetWidth() * BLOCK_SIZE,
-                                (game.GetMap().GetHeight() + 1) * BLOCK_SIZE)
+            self.screen_size = get_screen_size(game)
             self.screen = pygame.display.set_mode(
                 (self.screen_size[0], self.screen_size[1]), pygame.DOUBLEBUF)
 
             self.sprite_loader = sprites.SpriteLoader(BLOCK_SIZE)
             self.draw(game.GetMap())
+
+        # To display Win / Lose
+        result_image = sprites.ResultImage()
+        result_image_group = pygame.sprite.Group()
+        result_image_group.add(result_image)
+        self.result_image_group = result_image_group
+
+    def show_result(self):
+        game = self.game
+        screen = self.screen
+        result_image_group = self.result_image_group
+        screen_size = self.screen_size
+
+        if game.GetPlayState() == pyBaba.PlayState.WON:
+            result_image_group.update(pyBaba.PlayState.WON, screen_size)
+            result_image_group.draw(screen)
+            print('Won')
+        else:
+            result_image_group.update(pyBaba.PlayState.LOST, screen_size)
+            result_image_group.draw(screen)
+            print('Lost')
+
 
     def draw_obj(self, map, x_pos, y_pos):
         objects = map.At(x_pos, y_pos)
