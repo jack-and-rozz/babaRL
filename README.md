@@ -1,4 +1,4 @@
-(The codes in this repository can be still incomplete.)
+(Part of the codes in this repository can be still incomplete.)
 
 ## Overview
 This is a repository to train Baba-Is-You agents by RL and to visualize them on https://github.com/utilForever/baba-is-auto.
@@ -26,7 +26,7 @@ pip install --editable .
 ## How to run
 ```
 # Manual playing
-python manual_play [level_name]
+python manual_play.py [level_name]
 
 # Training a RL agent
 python REINFORCE.py [save_dir]

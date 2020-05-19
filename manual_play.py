@@ -6,9 +6,7 @@ import config
 import sys
 import sprites
 
-
 from rendering import Renderer
-
 
 def main(args):
     game = pyBaba.Game(args.map_path)
