@@ -1,3 +1,4 @@
+from glob import glob
 import argparse
 import torch
 from torch import nn, optim
@@ -78,9 +79,17 @@ def train(net, opt):
     del net.rewards[:]
 
 
-def main(args):
+def choose_map(map_root):
+    import random
+    map_list = list(glob(map_root + '/*.txt'))
+    return random.choice(map_list)
 
-    env = gym.make('baba-outofreach-v0', enable_render=args.enable_render)
+def main(args):
+    map_path = choose_map(args.map_root)
+    env = gym.make('baba-outofreach-v0', 
+                   enable_render=args.enable_render, 
+                   map_path=map_path)
+
     net = Network(H=env.H, W=env.W).to(device)
     opt = optim.Adam(net.parameters(), lr=1e-3)
     writer = SummaryWriter()
@@ -88,7 +97,7 @@ def main(args):
 
     global_step = 0
 
-    for e in range(10000):
+    for e in range(args.num_episode):
         score = 0
 
         # state: [batch_size, num_obj_types + 2 (is_text and is_rule), h, w]
@@ -96,12 +105,13 @@ def main(args):
         # state = env.reset().reshape(1, -1, 16, 22)
 
         step = 0
-        while step < 200:
+        while step < args.num_steps_per_episode:
+            text = 'Episode %d, Step %d' % (e, global_step)
             global_step += 1
 
             action = get_action(env, net, state)
 
-            env.render()
+            env.render(text=text)
 
             next_state, reward, done, _ = env.step(action)
             next_state = next_state.reshape(1, -1, env.H, env.W)
@@ -113,7 +123,7 @@ def main(args):
             step += 1
 
             if env.done:
-                env.render()
+                env.render(text=text)
                 break
 
         train(net, opt)
@@ -131,6 +141,12 @@ if __name__ == '__main__':
         add_help=True,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--enable-render', action='store_true', help='If true, the board during training or testing is displayed.')
+
+    parser.add_argument('--num_episode', type=int, default=10000, help=' ')
+    parser.add_argument('--num_steps_per_episode', type=int, default=200, help=' ')
+
+    parser.add_argument('--map_root', type=str,
+                        default='baba-is-auto/Resources/Maps', help=' ')
     args = parser.parse_args()
     main(args)
 

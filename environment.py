@@ -10,13 +10,11 @@ import rendering
 class BabaEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, enable_render=True):
+    def __init__(self, map_path="baba-is-auto/Resources/Maps/baba_is_you.txt", 
+                 enable_render=True):
         super(BabaEnv, self).__init__()
 
-
-        self.path = 'baba-is-auto/Resources/Maps/out_of_reach.txt'
-        # self.path = 'baba-is-auto/Resources/Maps/baba_is_you.txt'
-
+        self.path = map_path
         _map = open(self.path)
         self.W, self.H =[int(x) for x in  _map.readline().strip().split()]
         self.ids = np.array([l.strip().split() for l in _map ])
@@ -63,11 +61,11 @@ class BabaEnv(gym.Env):
 
         return self.get_obs(), reward, self.done, {}
 
-    def render(self, mode='human', close=False):
+    def render(self, mode='human', close=False, text=""):
         if close:
             self.renderer.quit_game()
 
-        return self.renderer.render(self.game.GetMap(), mode)
+        return self.renderer.render(self.game.GetMap(), mode, text=text)
 
     def get_obs(self):
         return np.array(
@@ -80,5 +78,8 @@ register(
     entry_point='environment:BabaEnv',
     max_episode_steps=200,
     nondeterministic=True,
-    kwargs={'enable_render': True},
+    kwargs={
+        'enable_render': True, 
+        'map_path': 'baba-is-auto/Resources/Maps/out_of_reach.txt',
+    },
 )

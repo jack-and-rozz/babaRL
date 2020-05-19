@@ -6,8 +6,6 @@ import sys, time
 import sprites
 from PIL import Image, ImageDraw, ImageFont
 
-textcolor = (200, 50, 50)
-
 def draw_obj(game, screen, x_pos, y_pos):
     objects = game.GetMap().At(x_pos, y_pos)
 
@@ -29,7 +27,7 @@ def draw(game, screen, epoch, time_step, action):
 
     action = action.split('.')[-1]
     text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
-    text = font.render(text, False, textcolor)
+    text = font.render(text, False, config.COLOR_METATXT)
     screen.blit(text, (0, 0))
     pygame.display.update()
 
