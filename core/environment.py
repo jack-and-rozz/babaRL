@@ -2,10 +2,10 @@ import gym
 from gym.utils import seeding
 from gym.envs.registration import register
 import numpy as np
-import config
 import pyBaba
-import rendering
 
+import core.images.rendering as rendering
+import config
 
 class BabaEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
@@ -74,12 +74,12 @@ class BabaEnv(gym.Env):
 
 
 register(
-    id='baba-outofreach-v0',
-    entry_point='environment:BabaEnv',
+    id='baba-is-you-v0',
+    entry_point='core.environment:BabaEnv',
     max_episode_steps=200,
     nondeterministic=True,
     kwargs={
         'enable_render': True, 
-        'map_path': 'baba-is-auto/Resources/Maps/out_of_reach.txt',
+        'map_path': '',
     },
 )

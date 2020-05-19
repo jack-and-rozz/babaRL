@@ -1,7 +1,9 @@
 import pygame
 import pyBaba
-import sprites
-import config
+
+import config as config
+import core.images.sprites as sprites
+
 COLOR_BACKGROUND = config.COLOR_BACKGROUND
 BLOCK_SIZE = config.BLOCK_SIZE
 

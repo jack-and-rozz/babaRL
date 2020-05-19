@@ -1,13 +1,13 @@
 import argparse, glob
 import pygame
 import pyBaba
-import config
 import sys, time
-import sprites
 from PIL import Image
 
-from rendering import Renderer
-import options
+from core.images.rendering import Renderer
+import core.images.sprites as sprites
+import core.options as options
+import config
 
 def get_all_obj(game):
     return [[game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
