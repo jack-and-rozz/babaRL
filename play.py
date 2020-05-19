@@ -8,15 +8,19 @@ import sprites
 
 from create_gif import draw, draw_obj, setup_game, setup_sprites, setup_screen
 import utils
+from rendering import Renderer
+
 
 def main(args):
     map_path = "baba-is-auto/Resources/Maps/baba_is_you.txt"
 
     game = setup_game(map_path)
-    screen = setup_screen(game)
-    sprite_loader, result_image_group = setup_sprites()
-    pygame.init()
-    pygame.font.init()
+    # screen = setup_screen(game)
+    # sprite_loader, result_image_group = setup_sprites()
+    # pygame.init()
+    # pygame.font.init()
+
+    renderer = Renderer(game)
 
     action_dic = {"Direction.UP": pyBaba.Direction.UP, "Direction.DOWN": pyBaba.Direction.DOWN,
                   "Direction.LEFT": pyBaba.Direction.LEFT, "Direction.RIGHT": pyBaba.Direction.RIGHT, "Direction.NONE": pyBaba.Direction.NONE}
@@ -64,9 +68,10 @@ def main(args):
         if game.GetPlayState() == pyBaba.PlayState.WON or game.GetPlayState() == pyBaba.PlayState.LOST:
             game_over = True
 
-        screen.fill(config.COLOR_BACKGROUND)
-        text = None
-        draw(game, screen, sprite_loader, text=text)
+        # screen.fill(config.COLOR_BACKGROUND)
+        # text = None
+        # draw(game, screen, sprite_loader, text=text)
+        renderer.render(game.GetMap(), text='Human Play')
         pygame.display.flip()
 
         clock.tick(config.FPS)

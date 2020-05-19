@@ -7,6 +7,8 @@ import sprites
 from PIL import Image, ImageDraw, ImageFont
 import utils
 
+from rendering import Renderer
+
 def draw_obj(game, screen, sprite_loader, x_pos, y_pos):
     objects = game.GetMap().At(x_pos, y_pos)
 
@@ -37,6 +39,9 @@ def play(game, screen, sprite_loader, result_image_group, actions, epoch=0):
     images = []
     prev_state = None
     screen_size = utils.get_screen_size(game)
+
+    renderer = Renderer(game)
+
     for time_step, action in enumerate(actions):
         text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
         print(text)
@@ -64,15 +69,14 @@ def play(game, screen, sprite_loader, result_image_group, actions, epoch=0):
 
         prev_state = state
 
-        screen.fill(config.COLOR_BACKGROUND)
-
         action = action.split('.')[-1]
         text = 'Epoch %d, Step %d, Action: %s' % (epoch, time_step, action)
-
-        draw(game, screen, sprite_loader, text=text)
-        pygame.display.flip()
-
-        img = screen2image(screen, epoch, time_step, action)
+        # screen.fill(config.COLOR_BACKGROUND)
+        # draw(game, screen, sprite_loader, text=text)
+        # pygame.display.flip()
+        renderer.render(game.GetMap(), text=text)
+        img = screen2image(renderer.screen, epoch, time_step, action)
+        # img = screen2image(screen, epoch, time_step, action)
         images.append(img)
 
     if game_over:

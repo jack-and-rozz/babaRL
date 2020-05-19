@@ -12,7 +12,7 @@ class Renderer():
         pygame.font.init()
         pygame.display.set_caption('OpenAI Gym - baba-is-out-v0')
 
-        self.font = pygame.font.Font(None, BLOCK_SIZE + 4)
+        self.font = pygame.font.Font(None, BLOCK_SIZE)
 
         self.game = game
         self.game_over = False
