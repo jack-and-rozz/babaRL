@@ -11,7 +11,6 @@ from rendering import Renderer
 def get_all_obj(game):
     return [[game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
 
-
 def play(game, actions, epoch=0):
     game_over = False
     images = []
@@ -48,20 +47,16 @@ def play(game, actions, epoch=0):
         pygame.display.flip()
         img = screen2image(screen, epoch, time_step, action)
         images.append(img)
-
     return images
-
 
 def screen2image(screen, epoch, time_step, action):
     X, Y = screen.get_size()
     img = Image.new('RGB', (X, Y), (0,0,0))
-
     for x in range(X):
         for y in range(Y):
             c = screen.get_at((x,y))
             img.putpixel((x,y), (c.r,c.g,c.b))
     return img
-
 
 def save_as_animation(images, save_path):
     images[0].save(save_path, save_all=True, 

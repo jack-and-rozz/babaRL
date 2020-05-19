@@ -22,3 +22,8 @@ MAP_ROOT = 'baba-is-auto/Resources/Maps'
 
 
 
+# deffiles = ['NounType.def', 'OpType.def', 'PropertyType.def', 'IconType.def']
+# enum_root = 'baba-is-auto/Includes/baba-is-auto/Enums'
+object_id2name = [l.strip() for l in open('./objects.list')]
+
+
