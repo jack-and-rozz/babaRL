@@ -1,6 +1,6 @@
 import pygame
 import pyBaba
-from images import GIFImage
+from core.images.gifimage import GIFImage
 
 class SpriteLoader:
     def __init__(self, block_size, as_gifimage=False):

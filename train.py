@@ -10,8 +10,9 @@ import gym
 import pyBaba
 from tensorboardX import SummaryWriter
 
-import environment, options
-from network import Network
+from core import environment, options
+from core.models.network import Network
+import config
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -61,7 +62,7 @@ def choose_map(map_root):
 
 def main(args):
     map_path = choose_map(config.MAP_ROOT)
-    env = gym.make('baba-outofreach-v0', 
+    env = gym.make('baba-is-you-v0', 
                    enable_render=args.enable_render, 
                    map_path=map_path)
 

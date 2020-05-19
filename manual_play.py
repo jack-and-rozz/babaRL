@@ -6,8 +6,8 @@ import config
 import sys
 import sprites
 
-from rendering import Renderer
-import options
+from core.images.rendering import Renderer
+import core.options as options
 
 def main(args):
     game = pyBaba.Game(args.map_path)
