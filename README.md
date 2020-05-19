@@ -4,7 +4,7 @@
 This is a repository to train Baba-Is-You agents by RL and to visualize them on https://github.com/utilForever/baba-is-auto.
 
 
-# Requirements
+## Requirements
 - python >= 3.7
 - cmake >= 3.14.3
 
