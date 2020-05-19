@@ -1,45 +1,19 @@
 from glob import glob
 import argparse
+
 import torch
 from torch import nn, optim
-import torch.nn.functional as F
 from torch.distributions import Categorical
 
 import copy
-
 import gym
-import environment
 import pyBaba
-
 from tensorboardX import SummaryWriter
 
+import environment, options
+from network import Network
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-class Network(nn.Module):
-    def __init__(self, H, W):
-        super(Network, self).__init__()
-        self.conv1 = nn.Conv2d(pyBaba.Preprocess.TENSOR_DIM, 128, 3, padding=1)
-        self.conv2 = nn.Conv2d(128, 128, 3, padding=1)
-        self.conv3 = nn.Conv2d(128, 128, 3, padding=1)
-        self.conv4 = nn.Conv2d(128, 128, 3, padding=1)
-        self.conv5 = nn.Conv2d(128, 1, 1, padding=0)
-        # TODO: fix the number of dimensions without depending on the screen size, x*y.
-        self.fc = nn.Linear(H * W, 4)
-
-        self.log_probs = []
-        self.rewards = []
-
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = F.relu(self.conv2(x))
-        x = F.relu(self.conv3(x))
-        x = F.relu(self.conv4(x))
-        x = F.relu(self.conv5(x))
-        x = x.view(x.data.size(0), -1)
-        x = self.fc(x)
-        return F.softmax(x, dim=1)
-
-
 
 def get_action(env, net, state):
     state = torch.tensor(state).to(device)
@@ -132,15 +106,7 @@ def main(args):
             f'Episode {e}: score: {score:.3f} time_step: {global_step} step: {step}')
 
 
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser( 
-        add_help=True,
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--enable-render', action='store_true', help='If true, the board during training or testing is displayed.')
-
-    parser.add_argument('--num_episode', type=int, default=10000, help=' ')
-    parser.add_argument('--num_steps_per_episode', type=int, default=200, help=' ')
-    args = parser.parse_args()
+    args = options.get_training_args()
     main(args)
 

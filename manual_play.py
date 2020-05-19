@@ -7,6 +7,7 @@ import sys
 import sprites
 
 from rendering import Renderer
+import options
 
 def main(args):
     game = pyBaba.Game(args.map_path)
@@ -60,14 +61,6 @@ def main(args):
         clock.tick(config.FPS)
 
 if __name__ == '__main__':
-
-    map_candidates = [l.split('/')[-1].split('.')[0] for l in glob.glob(config.MAP_ROOT + '/*')]
-
-    parser = argparse.ArgumentParser( 
-        add_help=True,
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('map_name', choices=map_candidates)
-    args = parser.parse_args()
-    args.map_path = config.MAP_ROOT + '/' + args.map_name + '.txt'
+    args = options.get_evaluation_args()
     main(args)
 

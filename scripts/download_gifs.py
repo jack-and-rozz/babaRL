@@ -9,9 +9,6 @@ paths = []
 for l in open(page):
     paths += re.findall(pattern, l)
 
-os.makedirs('text', exist_ok=True)
-os.makedirs('icon', exist_ok=True)
-
 for p in set(paths):
     if not re.search('data:', p):
         out_name = re.search('\/(.+?\.gif)', p).group(1).split('/')[-1]
