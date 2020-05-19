@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 from rendering import Renderer
 
 def get_all_obj(game):
-    return [[ game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
+    return [[game.GetMap().At(x_pos, y_pos) for x_pos in range(game.GetMap().GetWidth())] for y_pos in range(game.GetMap().GetHeight())]
 
 
 def play(game, actions, epoch=0):
