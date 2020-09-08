@@ -1,7 +1,7 @@
 (Part of the codes in this repository can be still incomplete.)
 
 ## Overview
-This is a repository for training Baba-Is-You agents by RL, for visualizing the agents, and for debugging the simulator forked from https://github.com/utilForever/baba-is-auto.
+This is a repository for training Baba-Is-You agents by RL, for visualizing the agents, and for debugging a [simulator](https://github.com/jack-and-rozz/baba-is-auto) forked from https://github.com/utilForever/baba-is-auto.
 
 
 ## Requirements
