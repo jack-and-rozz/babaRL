@@ -13,7 +13,7 @@ def add_common_args(parser):
 def add_training_args(parser):
     parser.add_argument('model_root', 
                         help='The directory to save the trained model.')
-    parser.add_argument('--enable-render', action='store_true', 
+    parser.add_argument('--enable_render', action='store_true', 
                         help='If true, the board during training or testing is displayed.')
 
     parser.add_argument('--num_episode', type=int, default=10000, help=' ')
@@ -23,7 +23,7 @@ def add_training_args(parser):
 
 def add_evaluation_args(parser):
     map_candidates = [l.split('/')[-1].split('.')[0] for l in glob.glob(config.MAP_ROOT + '/*')]
-    parser.add_argument('--map_name', type=str, default='baba_is_you',
+    parser.add_argument('-map', '--map_name', type=str, default='baba_is_you',
                         choices=map_candidates, help=' ')
     return parser
 
