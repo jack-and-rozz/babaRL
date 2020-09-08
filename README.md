@@ -1,28 +1,22 @@
 (Part of the codes in this repository can be still incomplete.)
 
 ## Overview
-This is a repository for training Baba-Is-You agents by RL, for visualizing the agents, and for debugging the simulator.
-
-The simulator can be downloaded from https://github.com/jack-and-rozz/baba-is-auto that is forked from https://github.com/utilForever/baba-is-auto. 
+This is a repository for training Baba-Is-You agents by RL, for visualizing the agents, and for debugging the simulator forked from https://github.com/utilForever/baba-is-auto.
 
 
 ## Requirements
 - python >= 3.7
 - cmake >= 3.14.3
-
+- g++ (confirmed in g++ 8.3.0)
 
 ## Setup
 ```
 pip install -r requirements.txt
 
-git clone https://github.com/utilForever/baba-is-auto --recursive
+git clone https://github.com/jack-and-rozz/baba-is-auto --recursive
 cd baba-is-auto 
-mkdir build 
-cd build 
-cmake ..
-make 
-cd ..
 pip install --editable .
+cd ..
 ```
 
 ## How to run
