@@ -27,7 +27,7 @@ python manual_play.py --map_name [map_name]
 # Training a RL agent
 python REINFORCE.py [save_dir]
 
-# Save the logs of the trained agent as gif, at each epoch
+# Save replays of a trained agent as gif
 python create_gif.py [save_dir] --map_name [map_name]
 ```
 
