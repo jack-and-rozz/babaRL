@@ -1,7 +1,9 @@
 (Part of the codes in this repository can be still incomplete.)
 
 ## Overview
-This is a repository to train Baba-Is-You agents by RL and to visualize them on https://github.com/utilForever/baba-is-auto. 
+This is a repository for training Baba-Is-You agents by RL, for visualizing the agents, and for debugging the simulator.
+
+The simulator can be downloaded from https://github.com/jack-and-rozz/baba-is-auto that is forked from https://github.com/utilForever/baba-is-auto. 
 
 
 ## Requirements
@@ -36,3 +38,5 @@ python create_gif.py [save_dir] --map_name [map_name]
 ```
 
 
+## Thanks to
+- [Chris Oak](https://github.com/utilForever)
