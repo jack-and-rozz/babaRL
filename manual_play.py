@@ -9,6 +9,19 @@ import copy
 
 from core.images.rendering import Renderer
 import core.options as options
+from core.const import icon_id2name, text_id2name
+
+def print_all_rules(game, time_step):
+    def rule2tuple(rule):
+        subj = rule.GetSubject()
+        oper = rule.GetOperator()
+        pred = rule.GetPredicate()
+        return tuple([text_id2name[x] for x in [subj, oper, pred]])
+
+    print('<Step %d> Rules' % time_step)
+    current_rules = game.GetRuleManager().GetAllRules()
+    for rule in current_rules:
+        print('-', rule2tuple(rule))
 
 def main(args):
     game = pyBaba.Game(args.map_path)
@@ -34,25 +47,6 @@ def main(args):
             time.sleep(0.5)
             pygame.quit()
             sys.exit()
-
-        # pressed_keys = pygame.key.get_pressed()
-        # if pressed_keys[pygame.K_UP]:
-        #     game.MovePlayer(pyBaba.Direction.UP)
-        #     time_step += 1
-        # elif pressed_keys[pygame.K_DOWN]:
-        #     game.MovePlayer(pyBaba.Direction.DOWN)
-        #     time_step += 1
-        # elif pressed_keys[pygame.K_LEFT]:
-        #     game.MovePlayer(pyBaba.Direction.LEFT)
-        #     time_step += 1
-        # elif pressed_keys[pygame.K_RIGHT]:
-        #     game.MovePlayer(pyBaba.Direction.RIGHT)
-        #     time_step += 1
-        # elif pressed_keys[pygame.K_SPACE]:
-        #     print('TODO: implement undo')
-        #     time_step -= 1
-        # else:
-        #     pass
 
         events = pygame.event.get()
         if not events:
@@ -80,7 +74,7 @@ def main(args):
                 elif event.key == pygame.K_BACKSPACE:
                     print('TODO: implement undo')
                     time_step -= 1
-
+                print_all_rules(game, time_step)
         if game.GetPlayState() == pyBaba.PlayState.WON or game.GetPlayState() == pyBaba.PlayState.LOST:
             game_over = True
 

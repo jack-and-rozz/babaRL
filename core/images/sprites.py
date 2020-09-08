@@ -1,18 +1,12 @@
 import pygame
 import pyBaba
 from core.images.gifimage import GIFImage
+from core.const import icon_id2name, text_id2name
 
 class SpriteLoader:
     def __init__(self, block_size, as_gifimage=False):
         self.scale = - (1.0 - (2 * block_size) / 48.)
-        self.icon_images = {pyBaba.ObjectType.ICON_BABA: 'BABA',
-                            pyBaba.ObjectType.ICON_FLAG: 'FLAG',
-                            pyBaba.ObjectType.ICON_WALL: 'WALL',
-                            pyBaba.ObjectType.ICON_ROCK: 'ROCK',
-                            pyBaba.ObjectType.ICON_TILE: 'TILE',
-                            pyBaba.ObjectType.ICON_WATER: 'WATER',
-                            pyBaba.ObjectType.ICON_GRASS: 'GRASS',
-                            pyBaba.ObjectType.ICON_LAVA: 'LAVA'}
+        self.icon_images = {k:v for k, v in icon_id2name.items()}
 
         for i in self.icon_images:
             if as_gifimage: 
@@ -25,20 +19,7 @@ class SpriteLoader:
                                                 (block_size, block_size))
 
 
-        self.text_images = {pyBaba.ObjectType.BABA: 'BABA',
-                            pyBaba.ObjectType.IS: 'IS',
-                            pyBaba.ObjectType.YOU: 'YOU',
-                            pyBaba.ObjectType.FLAG: 'FLAG',
-                            pyBaba.ObjectType.WIN: 'WIN',
-                            pyBaba.ObjectType.WALL: 'WALL',
-                            pyBaba.ObjectType.STOP: 'STOP',
-                            pyBaba.ObjectType.ROCK: 'ROCK',
-                            pyBaba.ObjectType.PUSH: 'PUSH',
-                            pyBaba.ObjectType.WATER: 'WATER',
-                            pyBaba.ObjectType.SINK: 'SINK',
-                            pyBaba.ObjectType.LAVA: 'LAVA',
-                            pyBaba.ObjectType.MELT: 'MELT',
-                            pyBaba.ObjectType.HOT: 'HOT'}
+        self.text_images = {k:v for k, v in text_id2name.items()}
 
         for i in self.text_images:
             if as_gifimage: 
