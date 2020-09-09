@@ -27,3 +27,10 @@ text_id2name = {
     pyBaba.ObjectType.MELT: 'MELT',
     pyBaba.ObjectType.HOT: 'HOT',
 }
+
+direction_id2name = {
+    pyBaba.Direction.UP: 'upArrow',
+    pyBaba.Direction.DOWN: 'downArrow',
+    pyBaba.Direction.RIGHT: 'rightArrow',
+    pyBaba.Direction.LEFT: 'leftArrow',
+}

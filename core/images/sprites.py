@@ -1,7 +1,7 @@
 import pygame
 import pyBaba
 from core.images.gifimage import GIFImage
-from core.const import icon_id2name, text_id2name
+from core.const import icon_id2name, text_id2name, direction_id2name
 
 class SpriteLoader:
     def __init__(self, block_size, as_gifimage=False):
@@ -18,12 +18,10 @@ class SpriteLoader:
                     './sprites/icon/{}.gif'.format(self.icon_images[i])),
                                                 (block_size, block_size))
 
-
         self.text_images = {k:v for k, v in text_id2name.items()}
 
         for i in self.text_images:
             if as_gifimage: 
-
                 self.text_images[i] = GIFImage(
                     './sprites/text/{}.gif'.format(self.text_images[i]))
                 self.text_images[i].scale(self.scale)
@@ -31,6 +29,18 @@ class SpriteLoader:
                 self.text_images[i] = pygame.transform.scale(pygame.image.load(
                     './sprites/text/{}.gif'.format(self.text_images[i])),
                                                 (block_size, block_size))
+
+        self.arrow_images = {}
+
+        for k, v in direction_id2name.items():
+            if as_gifimage: 
+                self.arrow_images[k] = GIFImage(
+                    './sprites/arrow/{}.gif'.format(v))
+                self.arrow_images[k].scale(self.scale)
+            else:
+                self.arrow_images[k] = pygame.transform.scale(pygame.image.load(
+                    './sprites/arrow/{}.gif'.format(v)),
+                    (block_size, block_size))
 
 
 

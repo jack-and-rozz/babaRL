@@ -79,7 +79,7 @@ def main(args):
             game_over = True
 
         renderer.render(game.GetMap(), 
-                        text='Step %d (Space: wait)' % time_step)
+                        text='Step %d, (KEY: SPACE + UDLR)' % time_step)
         pygame.display.flip()
         clock.tick(config.FPS)
 

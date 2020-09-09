@@ -59,19 +59,27 @@ class Renderer():
             print('Lost')
 
 
-    def draw_obj(self, map, x_pos, y_pos):
-        objects = map.At(x_pos, y_pos)
+    def draw_obj(self, map, x_pos, y_pos, draw_direction=False):
+        square = map.At(x_pos, y_pos)
+        for obj in square.GetObjects(): 
+            obj_type = obj.GetType()
+            direction = obj.GetDirection()
 
-        for obj_type in objects.GetTypes():
             if pyBaba.IsTextType(obj_type):
                 obj_image = self.sprite_loader.text_images[obj_type]
             else:
                 if obj_type == pyBaba.ObjectType.ICON_EMPTY:
                     continue
                 obj_image = self.sprite_loader.icon_images[obj_type]
+
+
             obj_rect = obj_image.get_rect()
             obj_rect.topleft = (x_pos * BLOCK_SIZE, (y_pos + 1) * BLOCK_SIZE)
             self.screen.blit(obj_image, obj_rect)
+
+            if draw_direction and (not direction == pyBaba.Direction.NONE):
+                arrow_image = self.sprite_loader.arrow_images[direction]
+                self.screen.blit(arrow_image, obj_rect)
 
     def draw(self, map, text=""):
         for y_pos in range(map.GetHeight()):
