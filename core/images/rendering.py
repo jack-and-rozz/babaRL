@@ -59,7 +59,7 @@ class Renderer():
             print('Lost')
 
 
-    def draw_obj(self, map, x_pos, y_pos, draw_direction=False):
+    def draw_obj(self, map, x_pos, y_pos, draw_direction=True):
         square = map.At(x_pos, y_pos)
         for obj in square.GetObjects(): 
             obj_type = obj.GetType()
