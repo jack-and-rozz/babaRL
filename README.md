@@ -7,7 +7,7 @@ This is a repository for training Baba-Is-You agents by RL, for visualizing the 
 ## Requirements
 - python >= 3.7
 - cmake >= 3.14.3
-- g++ (confirmed in g++ 8.3.0)
+- g++ (developed in g++ 8.3.0)
 
 ## Setup
 ```
