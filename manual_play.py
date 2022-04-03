@@ -18,13 +18,14 @@ def print_all_rules(game, time_step):
         pred = rule.GetPredicate()
         return tuple([text_id2name[x] for x in [subj, oper, pred]])
 
-    print('<Step %d> Rules' % time_step)
+    print('<Step %d> Rules' % time_step, flush=True)
     current_rules = game.GetRuleManager().GetAllRules()
     for rule in current_rules:
         print('-', rule2tuple(rule))
 
 def main(args):
     game = pyBaba.Game(args.map_path)
+    print(game)
     renderer = Renderer(game)
 
     clock = pygame.time.Clock()
@@ -41,7 +42,7 @@ def main(args):
                         sys.exit()
             renderer.render(game.GetMap(), text='Step %d, (KEY: SPACE + UDLR)' % time_step)
 
-            time.sleep(0.75)
+            time.sleep(0.5)
             renderer.show_result()
             pygame.display.flip()
             time.sleep(0.5)
