@@ -2,13 +2,17 @@ import pyBaba
 
 icon_id2name = {
     pyBaba.ObjectType.ICON_BABA: 'BABA',
+    pyBaba.ObjectType.ICON_DOOR: 'DOOR',
     pyBaba.ObjectType.ICON_FLAG: 'FLAG',
-    pyBaba.ObjectType.ICON_WALL: 'WALL',
+    pyBaba.ObjectType.ICON_GHOST: 'GHOST',
+    pyBaba.ObjectType.ICON_GRASS: 'GRASS',
+    pyBaba.ObjectType.ICON_KEY: 'KEY',
+    pyBaba.ObjectType.ICON_LAVA: 'LAVA',
     pyBaba.ObjectType.ICON_ROCK: 'ROCK',
     pyBaba.ObjectType.ICON_TILE: 'TILE',
     pyBaba.ObjectType.ICON_WATER: 'WATER',
-    pyBaba.ObjectType.ICON_GRASS: 'GRASS',
-    pyBaba.ObjectType.ICON_LAVA: 'LAVA',
+    pyBaba.ObjectType.ICON_WALL: 'WALL',
+
 }
 
 text_id2name = {
@@ -26,6 +30,10 @@ text_id2name = {
     pyBaba.ObjectType.LAVA: 'LAVA',
     pyBaba.ObjectType.MELT: 'MELT',
     pyBaba.ObjectType.HOT: 'HOT',
+    pyBaba.ObjectType.SHUT: 'SHUT',
+    pyBaba.ObjectType.OPEN: 'OPEN',
+    pyBaba.ObjectType.TELE: 'TELE',
+    pyBaba.ObjectType.SHIFT: 'SHIFT',
 }
 
 direction_id2name = {
