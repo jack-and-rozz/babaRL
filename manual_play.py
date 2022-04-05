@@ -6,6 +6,7 @@ import config
 import sys
 import sprites
 import copy
+from PIL import Image
 
 from core.images.rendering import Renderer
 import core.options as options
@@ -62,7 +63,8 @@ def main(args):
     pygame.time.set_timer(pygame.USEREVENT, 100)
     game_over = False
     time_step = 0
-
+    prev_time_step = time_step
+    images = []
     while True:
         if game_over:
             for event in pygame.event.get():
@@ -74,10 +76,12 @@ def main(args):
 
             time.sleep(0.5)
             renderer.show_result()
+            images.append(screen2image(renderer.screen))
             pygame.display.flip()
             time.sleep(0.5)
             pygame.quit()
-            sys.exit()
+            return images
+            # sys.exit()
 
         events = pygame.event.get()
         if not events:
@@ -113,7 +117,30 @@ def main(args):
         pygame.display.flip()
         clock.tick(config.FPS)
 
+        if time_step != prev_time_step:
+            images.append(screen2image(renderer.screen))
+        prev_time_step = time_step
+
+
+def screen2image(screen):
+    X, Y = screen.get_size()
+    img = Image.new('RGB', (X, Y), (0,0,0))
+    for x in range(X):
+        for y in range(Y):
+            c = screen.get_at((x,y))
+            img.putpixel((x,y), (c.r,c.g,c.b))
+    return img
+
+def save_as_animation(images, save_path):
+    images[0].save(save_path, save_all=True, 
+                   append_images=images[1:], optimize=False, 
+                   duration=200, loop=0)
+
+
 if __name__ == '__main__':
     args = options.get_evaluation_args()
-    main(args)
+    images = main(args)
+    if args.save_gif_path:
+        save_as_animation(images, args.save_gif_path)
+    
 

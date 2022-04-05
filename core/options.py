@@ -25,6 +25,8 @@ def add_evaluation_args(parser):
     map_candidates = [l.split('/')[-1].split('.')[0] for l in glob.glob(config.MAP_ROOT + '/*')]
     parser.add_argument('-map', '--map_name', type=str, default='baba_is_you',
                         choices=map_candidates, help=' ')
+    parser.add_argument('--save_gif_path', type=str, default='', help=' ')
+
     return parser
 
 def get_training_args():
