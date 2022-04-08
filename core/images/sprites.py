@@ -1,3 +1,4 @@
+import os
 import pygame
 import pyBaba
 from core.images.gifimage import GIFImage
@@ -7,8 +8,11 @@ class SpriteLoader:
     def __init__(self, block_size, as_gifimage=False):
         self.scale = - (1.0 - (2 * block_size) / 48.)
         self.icon_images = {k:v for k, v in icon_id2name.items()}
-
+        # print(self.icon_images)
+        # exit(1)
         for i in self.icon_images:
+            if not os.path.exists('./sprites/icon/{}.gif'.format(self.icon_images[i])):
+                continue
             if as_gifimage: 
                 self.icon_images[i] = GIFImage(
                     './sprites/icon/{}.gif'.format(self.icon_images[i]))
@@ -21,6 +25,9 @@ class SpriteLoader:
         self.text_images = {k:v for k, v in text_id2name.items()}
 
         for i in self.text_images:
+            if not os.path.exists('./sprites/text/{}.gif'.format(self.text_images[i])):
+                continue
+
             if as_gifimage: 
                 self.text_images[i] = GIFImage(
                     './sprites/text/{}.gif'.format(self.text_images[i]))
