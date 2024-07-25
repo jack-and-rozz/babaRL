@@ -6,6 +6,6 @@ pygame==2.0.0.dev4 # Older versions can cause troubles when running in MacOS.
 Pillow
 
 # for ML
-torch==1.2.0
+torch==2.2.0
 gym
 tensorboardX
