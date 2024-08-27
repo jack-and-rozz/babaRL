@@ -23,7 +23,7 @@ def listup_objects_and_positions(game, object_properties=[]):
             sq = map_.At(x, y)
             objs = sq.GetObjects()
             for obj in objs:
-                if rule_manager.HasType(obj, pyBaba.ObjectType.YOU):
+                if rule_manager.HasType(obj, map_, pyBaba.ObjectType.YOU):
                     res.append((icon_id2name[obj.GetType()], obj.GetId(), x, y))
     return res
 

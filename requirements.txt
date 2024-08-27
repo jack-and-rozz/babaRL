@@ -2,10 +2,12 @@ pytest
 wheel
 
 # for GUI
-pygame==2.0.0.dev4 # Older versions can cause troubles when running in MacOS.
+# pygame==2.0.0.dev4 # Older versions can cause troubles when running in MacOS.
+pygame==2.0.0
 Pillow
 
 # for ML
-torch==1.2.0
+# torch==1.2.0
+torch
 gym
 tensorboardX
